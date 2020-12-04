@@ -56,21 +56,25 @@ class _PriceScreenState extends State<PriceScreen> {
     List<Widget> list=[];
      for ( String currency in cryptoList)
       {
+        if( data!=null)
+          {
+            value=(data[currency].roundToDouble().toString());
+          }
         list.add(CrypoCard(value: value,selectedCurrency: selectedCurrency,cryptoCurrency: currency,));
       }
      return list;
   }
 
   String value = '?';
-
+  Map data;
   //TODO 7: Figure out a way of displaying a '?' on screen while we're waiting for the price data to come back. Hint: You'll need a ternary operator.
 
   //TODO 6: Update this method to receive a Map containing the crypto:price key value pairs. Then use that map to update the CryptoCards.
   void getData() async {
     try {
-      double data = await CoinData().getCoinData(selectedCurrency);
+      data = await CoinData().getCoinData(selectedCurrency);
       setState(() {
-        value = data.toStringAsFixed(0);
+        CryptoCurrency();
       });
     } catch (e) {
       print(e);
